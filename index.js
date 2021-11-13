@@ -26,7 +26,7 @@ async function run() {
         console.log('database connected')
         const orderCollection = database.collection("orders");
         const usersCollection = database.collection('users');
-        const newProductCollection = database.collection('addproduct')
+        // const newProductCollection = database.collection('addproduct')
 
         app.get('/services', async (req, res) => {
             const cursor = servicesCollection.find({});
@@ -68,16 +68,16 @@ async function run() {
         })
 
         // add new product
-        app.post('/addproduct', async (req, res) => {
+        app.post('/services', async (req, res) => {
             const newProduct = req.body;
-            const result = await newProductCollection.insertOne(newProduct);
+            const result = await servicesCollection.insertOne(newProduct);
             res.json(result);
         })
 
 
         // Get Add New Services
-        app.get('/addproduct', async (req, res) => {
-            const getNewProduct = newProductCollection.find({})
+        app.get('/services', async (req, res) => {
+            const getNewProduct = servicesCollection.find({})
             const addNewProduct = await getNewProduct.toArray();
             res.send(addNewProduct);
         })
