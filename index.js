@@ -26,6 +26,7 @@ async function run() {
         console.log('database connected')
         const orderCollection = database.collection("orders");
         const usersCollection = database.collection('users');
+        const newProductCollection = database.collection('addproduct')
 
         app.get('/services', async (req, res) => {
             const cursor = servicesCollection.find({});
@@ -64,6 +65,21 @@ async function run() {
             const result = await usersCollection.insertOne(user);
             console.log(result);
             res.json(result);
+        })
+
+        // add new product
+        app.post('/addproduct', async (req, res) => {
+            const newProduct = req.body;
+            const result = await newProductCollection.insertOne(newProduct);
+            res.json(result);
+        })
+
+
+        // Get Add New Services
+        app.get('/addproduct', async (req, res) => {
+            const getNewProduct = newProductCollection.find({})
+            const addNewProduct = await getNewProduct.toArray();
+            res.send(addNewProduct);
         })
 
 
