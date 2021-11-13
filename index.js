@@ -26,7 +26,7 @@ async function run() {
         console.log('database connected')
         const orderCollection = database.collection("orders");
         const usersCollection = database.collection('users');
-        // const newProductCollection = database.collection('addproduct')
+        const ratingCollection = database.collection('ratings');
 
         app.get('/services', async (req, res) => {
             const cursor = servicesCollection.find({});
@@ -73,6 +73,24 @@ async function run() {
             const result = await servicesCollection.insertOne(newProduct);
             res.json(result);
         })
+
+        // ratings
+        app.post('/ratings', async (req, res) => {
+            const rating = req.body;
+            const result = await ratingCollection.insertOne(rating);
+            res.json(result);
+        })
+
+
+        // get ratings
+        app.get('/ratings', async (req, res) => {
+            const cursor = ratingCollection.find({});
+            const ratings = await cursor.toArray();
+            res.send(ratings);
+        })
+
+
+
 
 
         // Get Add New Services
