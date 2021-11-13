@@ -101,7 +101,7 @@ async function run() {
         })
 
 
-        // put method
+        // put method here
         app.put('/users', async (req, res) => {
             const user = req.body;
             const filter = { email: user.email };
@@ -112,7 +112,7 @@ async function run() {
         });
 
 
-        // admin role
+        // admin role here
         app.put('/users/admin', async (req, res) => {
             const user = req.body;
             const filter = { email: user.email };
