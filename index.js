@@ -122,7 +122,7 @@ async function run() {
 
         })
 
-        // finding specific admin
+        // finding specific admin by email
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email: email };
