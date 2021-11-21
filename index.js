@@ -58,6 +58,48 @@ async function run() {
             res.json(result);
         })
 
+        // getting manage all orders
+        app.get('/manageAllOrders', async (req, res) => {
+            const cursor = orderCollection.find({})
+            const manageOrders = await cursor.toArray();
+            res.send(manageOrders);
+        })
+
+
+
+        // update order status
+        app.put('/manageAllOrders/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateStatus = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = { $set: { status: updateStatus.status } };
+            const result = await orderCollection.updateOne(
+                filter,
+                updateDoc,
+                options
+            );
+            res.json(result);
+            console.log(result);
+        });
+
+
+        // manage products
+        app.get('/manageProducts', async (req, res) => {
+            const cursor = servicesCollection.find({});
+            const services = await cursor.toArray();
+            res.send(services);
+        })
+
+        // delete
+        app.delete('/manageProducts/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await servicesCollection.deleteOne(query);
+            console.log('delete order with id', result);
+            res.json(result);
+        })
+
 
         // post users
         app.post('/users', async (req, res) => {
